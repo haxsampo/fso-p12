@@ -2,6 +2,6 @@ POST http://localhost:3000/todos HTTP/1.1
 content-type: application/json
 
 {
-    "text": "new todo1",
-    "done": false
+    "text": "new todo2",
+    "done": true
 }
