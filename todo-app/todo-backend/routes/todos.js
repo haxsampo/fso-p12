@@ -1,9 +1,12 @@
 const express = require('express');
 const { Todo } = require('../mongo')
 const router = express.Router();
+//const { MONGO_URL } = require('../util/config')
+const {getAsync, setAsync} = require('../redis/index')
 
 /* GET todos listing. */
 router.get('/', async (_, res) => {
+  console.log("router get")
   const todos = await Todo.find({})
   res.send(todos);
 });
@@ -11,6 +14,12 @@ router.get('/', async (_, res) => {
 /* POST todo to listing. */
 router.post('/', async (req, res) => {
   console.log("router.post")
+  const todosn = await getAsync("added_todos")
+  if (todosn) {
+    await setAsync("added_todos", 1+parseInt(todosn))
+  } else {
+    await setAsync("added_todos", 1)
+  }
   const todo = await Todo.create({
     text: req.body.text,
     done: false
@@ -29,30 +38,28 @@ const findByIdMiddleware = async (req, res, next) => {
   next()
 }
 
+
 /* DELETE todo. */
 singleRouter.delete('/', async (req, res) => {
+  console.log("singlerouter delete")
   await req.todo.delete()  
   res.sendStatus(200);
 });
 
 /* GET todo. */
 singleRouter.get('/', async (req, res) => {
-  console.log("request.params.id",req.params.id)
-  console.log("req.params", req.params)
-  console.log("req.todo", req.todo)
-  //const todo = await Todo.findById(req.params.id)
+  console.log("singleRouter get")
+  //console.log("request.params.id",req.params.id)
+  //console.log("req.params", req.params)
+  //console.log("req.todo", req.todo)
   res.send(req.todo)
-  //res.sendStatus(405); // Implement this
 });
 
 /* PUT todo. */
 singleRouter.put('/', async (req, res) => {
-  //res.sendStatus(405); // Implement this
+  console.log("singlerouter put")
   const {text, done} = req.body
-  //console.log(req.todo.id)
-  //const updatedTodo = await Todo.findByIdAndUpdate(req.todo.id, {text, done}, {new: true})
   const upTodo = await Todo.findOneAndUpdate(req.todo.id, {text, done})
-  //console.log(upTodo)
   res.send(upTodo)
 });
 

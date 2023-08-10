@@ -1,0 +1,20 @@
+docker exec -it todo-backend-redis-1 bash
+redis-cli
+AUTH default jotain
+  OK
+KEYS *
+  1) "added_todos"
+GET added_todos
+  "115"
+set added-todos 9001
+  OK
+GET added_todos
+  "9001"
+GET added_todos
+  "9002"
+DEL added_todos
+  (integer) 1
+GET added_todos
+  (nil)
+GET added_todos
+  "1"
