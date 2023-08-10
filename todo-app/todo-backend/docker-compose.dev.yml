@@ -16,7 +16,9 @@ services:
     ports:
       - 6379:6379
     image: redis:7.0.12
-    command: redis-server --save 20 1 --loglevel warning --requirepass jotain
+    command: redis-server --appendonly yes --save 20 1 --loglevel warning --requirepass jotain
+    volumes:
+      - ./redis_data:/data
     #command: redis-server --save 20 1 --loglevel warning --requirepass nakkinakki
     #environment:
     #  REDIS_PORT: 6379

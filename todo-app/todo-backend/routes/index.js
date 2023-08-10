@@ -21,7 +21,7 @@ router.get('/statistics', async (req, res) => {
   if(todosn) {
     res.send(todosn)
   } else {
-    res.send(json({"added_todos":0}))
+    res.send({"added_todos":0})
   } 
 });
 
