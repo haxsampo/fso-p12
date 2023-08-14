@@ -17,6 +17,7 @@ const TodoView = () => {
   }, [])
 
   const createTodo = async (todo) => {
+    console.log("BASEURL",axios.defaults.baseURL) // api.defaults.baseURL
     const { data } = await axios.post('/todos', todo)
     setTodos([...todos, data])
   }
@@ -36,7 +37,7 @@ const TodoView = () => {
 
   return (
     <>
-      <h1>Todos</h1>
+      <h1>Todot ja paskat+1</h1>
       <Form createTodo={createTodo} />
       <List todos={todos} deleteTodo={deleteTodo} completeTodo={completeTodo} />
     </>
