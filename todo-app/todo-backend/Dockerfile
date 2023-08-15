@@ -6,5 +6,7 @@ COPY . .
 
 RUN npm ci 
 
-ENV DEBUG=playground:*
-CMD npm start
+#ENV DEBUG=playground:*
+ENV DOCKER_ENV = TRUE
+CMD ["npm","start"]
+#CMD npm start
