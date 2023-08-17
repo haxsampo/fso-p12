@@ -32,7 +32,7 @@ services:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8080:80
-    container_name: reverse-proxy-1
+    container_name: reverse-proxy-2
     depends_on:
       - app # wait for the frontend container to be started
   mongo:
